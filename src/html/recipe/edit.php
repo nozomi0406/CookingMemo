@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>共有レシピ帳【レシピ登録】</title>
+    <title>共有レシピ帳【レシピ修正】</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 </head>
@@ -60,7 +60,7 @@
 
     <!-- コンテナ -->
     <div class="container">
-        <h1>レシピ登録</h1>
+        <h1>レシピ修正</h1>
         <form action="./action.php" method="POST" enctype="multipart/form-data">
 
             <div class="form-group border-bottom border-dark pb-3">
@@ -70,25 +70,25 @@
 
             <div class="form-group border-bottom border-dark pb-3">
                 <span class="input_name">調理名</span><br>
-                <input type="text" name="cooking_name" class="cooking_name" data-target="form" value="">
+                <input type="text" name="cooking_name" class="cooking_name" data-target="form" value="カレー">
                 （100文字以内）
             </div>
 
             <div class="form-group border-bottom border-dark pb-3">
                 <span class="input_name">調理時間</span><br>
-                <input type="number" min="0" name="cooking_time" class="cooking_time" data-target="form" value="">
+                <input type="number" min="0" name="cooking_time" class="cooking_time" data-target="form" value="15">
                 分
             </div>
 
             <div>
                 <span class="input_name">調理カテゴリ</span><br>
-                <input type="checkbox" name="category" value="1">
+                <input type="checkbox" name="category" value="1" checked="checked">
                 <label for="1">肉料理</label>
                 <input type="checkbox" name="category" value="2">
                 <label for="2">魚料理</label>
                 <input type="checkbox" name="category" value="3">
                 <label for="3">野菜料理</label>
-                <input type="checkbox" name="category" value="4">
+                <input type="checkbox" name="category" value="4" checked="checked">
                 <label for="4">ご飯もの</label>
                 <input type="checkbox" name="category" value="5">
                 <label for="5">和食</label>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>共有レシピ帳【レシピ登録】</title>
+    <title>共有レシピ帳【レシピ削除】</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 </head>
@@ -60,86 +60,12 @@
 
     <!-- コンテナ -->
     <div class="container">
-        <h1>レシピ登録</h1>
+        <h1>レシピ削除</h1>
         <form action="./action.php" method="POST" enctype="multipart/form-data">
-
-            <div class="form-group border-bottom border-dark pb-3">
-                <label for="image_file">画像ファイルを選択してください</label>
-                <input type="file" name="image_file" id="image_file" class="form-control-file">
-            </div>
-
-            <div class="form-group border-bottom border-dark pb-3">
-                <span class="input_name">調理名</span><br>
-                <input type="text" name="cooking_name" class="cooking_name" data-target="form" value="">
-                （100文字以内）
-            </div>
-
-            <div class="form-group border-bottom border-dark pb-3">
-                <span class="input_name">調理時間</span><br>
-                <input type="number" min="0" name="cooking_time" class="cooking_time" data-target="form" value="">
-                分
-            </div>
-
-            <div>
-                <span class="input_name">調理カテゴリ</span><br>
-                <input type="checkbox" name="category" value="1">
-                <label for="1">肉料理</label>
-                <input type="checkbox" name="category" value="2">
-                <label for="2">魚料理</label>
-                <input type="checkbox" name="category" value="3">
-                <label for="3">野菜料理</label>
-                <input type="checkbox" name="category" value="4">
-                <label for="4">ご飯もの</label>
-                <input type="checkbox" name="category" value="5">
-                <label for="5">和食</label>
-                <input type="checkbox" name="category" value="6">
-                <label for="6">中華</label>
-            </div>
-            <div class="form-group border-bottom border-dark pb-3">
-                <input type="checkbox" name="category" value="1">
-                <label for="1">肉料理</label>
-                <input type="checkbox" name="category" value="2">
-                <label for="2">魚料理</label>
-                <input type="checkbox" name="category" value="3">
-                <label for="3">野菜料理</label>
-                <input type="checkbox" name="category" value="4">
-                <label for="4">ご飯もの</label>
-                <input type="checkbox" name="category" value="5">
-                <label for="5">和食</label>
-                <input type="checkbox" name="category" value="6">
-                <label for="6">中華</label>
-            </div>
-
-            <div class="form-group border-bottom border-dark pb-3">
-                <span class="input_name">材料・調味料</span><br>
-                <textarea name="material" id="material" cols="50" rows="10">
-【材料】
-
-
-
-【調味料】
-                </textarea>
-            </div>
-            <div class="form-group border-bottom border-dark pb-3">
-                <span class="input_name">調理方法</span><br>
-                <textarea name="cooking_method" id="cooking_method" cols="50" rows="10">
-1.
-
-2.
-
-3.
-
-4.
-                </textarea>
-            </div>
-            <div class="form-group border-bottom border-dark pb-3">
-                <span class="input_name">ポイント事項</span><br>
-                <textarea name="memo" id="memo" cols="50" rows="4">
-
-                </textarea>
-            </div>
+        こちらのレシピを削除しますか？
+        </form>
     </div>
-    <input type="submit" value="送信" class="btn btn-primary">
+    <input type="submit" value="削除" class="btn btn-primary">
     <input type="button" value="キャンセル" class="btn btn-outline-primary" onclick="location.href='./';">
     </form>
     </div>
