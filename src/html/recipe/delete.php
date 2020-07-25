@@ -66,8 +66,9 @@
         </form>
     </div>
     <input type="submit" value="削除" class="btn btn-primary">
-    <input type="button" value="キャンセル" class="btn btn-outline-primary" onclick="location.href='./';">
+    <input type="button" value="キャンセル" class="btn btn-outline-primary" onclick="location.href='./';"><br>
     </form>
+    <a href="../login/">会員ログインはこちら</a>
     </div>
     <!-- コンテナ ここまで -->
 

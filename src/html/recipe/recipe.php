@@ -130,7 +130,8 @@
         </div>
     </div>
 
-    <input type="button" value="戻る" class="btn btn-outline-primary" onclick="location.href='./';">
+    <input type="button" value="戻る" class="btn btn-outline-primary" onclick="location.href='./';"><br>
+    <a href="../login/">会員ログインはこちら</a>
 
     <!-- コンテナ ここまで -->
 
