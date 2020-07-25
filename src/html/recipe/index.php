@@ -56,16 +56,16 @@
                     </div>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0" action="./recipe_search.php" method="post">
-                <input class="form-control mr-sm-2" type="recipe_search" placeholder="レシピ名検索" aria-label="recipe_search" name="recipe_search" value="">
+            <form class="form-inline my-2 my-lg-0" action="./search_recipe.php" method="post">
+                <input class="form-control mr-sm-2" type="search_recipe" placeholder="レシピ名検索" aria-label="search_recipe" name="search_recipe" value="">
                 <button class="btn btn-outline-light my-2 my-sm-0" type="submit">レシピ検索</button>
             </form>
-            <form class="form-inline my-2 my-lg-0" action="./material_search.php" method="post">
-                <input class="form-control mr-sm-2" type="material_search" placeholder="材料検索" aria-label="material_search" name="material_search" value="">
+            <form class="form-inline my-2 my-lg-0" action="./search_material.php" method="post">
+                <input class="form-control mr-sm-2" type="search_material" placeholder="材料検索" aria-label="search_material" name="search_material" value="">
                 <button class="btn btn-outline-light my-2 my-sm-0" type="submit">材料検索</button>
             </form>
-            <form class="form-inline my-2 my-lg-0" action="./time_search.php" method="post">
-                <select class="form-control mr-sm-2" type="search" placeholder="レシピ名検索" aria-label="Search" name="search" value="">
+            <form class="form-inline my-2 my-lg-0" action="./search_time.php" method="post">
+                <select class="form-control mr-sm-2" type="search_time" placeholder="レシピ名検索" aria-label="search_time" name="search_time" value="">
                     <option value="">--選択してください--</option>
                     <option value="">5分</option>
                     <option value="">10分</option>
