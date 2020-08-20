@@ -94,7 +94,7 @@ try {
         $cookingCategoryDB->cookingCategoryInsert($lastid, $v);
     }
 
-    // 正常終了したときは、ログイン情報とエラーメッセージを削除
+    // 正常終了したときは、レシピ登録情報とエラーメッセージを削除
     unset($_SESSION['recipe']);
     unset($_SESSION['err_msg']);
 

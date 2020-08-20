@@ -146,7 +146,6 @@ try {
                 <?php endif ?>
                 <?php foreach ($categorylist as $v) : ?>
                     <input type="checkbox" name="category[]" class="category" value="<?= $v['id'] ?>" <?php if (isset($_SESSION['recipe']['category']) && in_array($v['id'], $_SESSION['recipe']['category'])) echo " checked" ?>>
-
                     <label for="<?= $v['id'] ?>"><?= $v['category'] ?> </label>
                 <?php endforeach ?>
             </div>
@@ -164,7 +163,14 @@ try {
                 <?php if (isset($_SESSION['err_msg']['cooking_method']) && !empty($_SESSION['err_msg']['cooking_method'])) : ?>
                     <p class="alert alert-danger py-1 px-1"><?= $_SESSION['err_msg']['cooking_method'] ?></p>
                 <?php endif ?>
-                <textarea name="cooking_method" id="cooking_method" cols="50" rows="10"><?php if (isset($_SESSION['recipe']['cooking_method'])) echo $_SESSION['recipe']['cooking_method'] ?></textarea>
+                <textarea name="cooking_method" id="cooking_method" cols="50" rows="10"><?php if (isset($_SESSION['recipe']['cooking_method'])) echo $_SESSION['recipe']['cooking_method'];
+                                                                                        else echo '1.
+
+2.
+
+3.
+
+4.'; ?></textarea>
             </div>
             <div class="form-group border-bottom border-dark pb-3">
                 <span class="input_name">ポイント事項</span><br>

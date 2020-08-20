@@ -12,15 +12,14 @@ session_regenerate_id();
 // エラーメッセージを消去。
 unset($_SESSION['err_msg']);
 
+// ホームに戻る度にレシピ登録情報を消しておく。
+unset($_SESSION['recipe']);
+
 // ユーザー情報が無かったらlogin.phpに戻る
 if (empty($_SESSION['user'])) {
     header('location: ../login/');
     exit;
 }
-
-// ワンタイムトークンを生成してセッションに保存します。
-$token = bin2hex(openssl_random_pseudo_bytes(32));
-$_SESSION['token'] = $token;
 
 try {
     // 検索キーワード
@@ -78,19 +77,6 @@ try {
             display: inline-block;
         }
 
-        /* 打消し線を入れる */
-        /* tr.del>td {
-            text-decoration: line-through;
-        } */
-
-        td.del {
-            text-decoration: line-through;
-        }
-
-        /* ボタンのセルは打消し線を入れない */
-        tr.del>td.button {
-            text-decoration: none;
-        }
     </style>
 </head>
 
@@ -151,11 +137,6 @@ try {
 
     <!-- コンテナ -->
     <div class="container">
-        
-        <?php if (isset($_SESSION['err_msg']['err'])) : ?>
-            <p class="alert alert-danger"><?= $_SESSION['err_msg']['err'] ?></p>
-        <?php endif ?>
-
         <div class="row my-2">
             <?php foreach ($recipeList as $v) : ?>
                 <div class="col-md-3">
@@ -201,11 +182,6 @@ try {
         <a href="../login/">会員ログインはこちら</a>
     </div>
     <!-- コンテナ ここまで -->
-
-    <!-- 必要なJavascriptを読み込む -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
 </body>
 
