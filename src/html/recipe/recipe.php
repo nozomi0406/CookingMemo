@@ -1,3 +1,56 @@
+<?php
+// 必要なファイルを読み込む
+require_once('../classes/model/BaseModel.php');
+require_once('../classes/model/Cooking.php');
+require_once('../classes/model/Category.php');
+require_once('../classes/model/Cooking_Category.php');
+
+// セッションをスタートする。
+session_start();
+session_regenerate_id();
+
+// ユーザー情報が無かったらlogin.phpに戻る
+if (empty($_SESSION['user'])) {
+    header('location: ../login/');
+    exit;
+}
+
+// ワンタイムトークンを生成してセッションに保存します。
+$token = bin2hex(openssl_random_pseudo_bytes(32));
+$_SESSION['token'] = $token;
+
+try {
+    // 検索キーワード
+    $searchRecipe = "";
+    $searchCategory = "";
+    $searchTime = "";
+
+    // cookingテーブルクラスのインスタンスを生成する
+    $cookingDB = new Cooking();
+    $categoryDB = new Category();
+    $cookingCategoryDB = new Cooking_Category();
+
+    // カテゴリを全件取得します。
+    $categorylist = $categoryDB->categorySelectAll();
+
+    // 料理を全件取得します。
+    $return = false;
+
+    if (isset($_GET['id'])) {
+        $recipe = $cookingDB->getRecipePart($_GET['id']);
+        // var_dump($recipe);
+        // exit;
+
+        if ($recipe == true) {
+            $return = true;
+        }
+    }
+} catch (Exception $e) {
+    $_SESSION['err_msg1'] = "申し訳ございません・エラーが発生しました。";
+    header('Location:../error/error.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -9,6 +62,11 @@
     <title>共有レシピ帳【レシピ詳細】</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
+    <!-- <style>
+        td {
+            white-space: pre-wrap;
+        }
+    </style> -->
 </head>
 
 <body>
@@ -29,28 +87,36 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        テスト2 太郎 </a>
+                        <?= $_SESSION['user']['family_name'] . ' ' . $_SESSION['user']['first_name'] ?>
+                    </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="../login/logout.php">ログアウト</a>
                     </div>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0" action="./search_recipe.php" method="post">
-                <input class="form-control mr-sm-2" type="search_recipe" placeholder="レシピ名検索" aria-label="search_recipe" name="search_recipe" value="">
+            <form class="form-inline my-2 my-lg-0" action="./" method="get">
+                <input class="form-control mr-sm-2" type="search_recipe" placeholder="レシピ名、材料" aria-label="search_recipe" name="search_recipe" value="<?= $searchRecipe ?>">
                 <button class="btn btn-outline-light my-2 my-sm-0" type="submit">レシピ検索</button>
             </form>
-            <form class="form-inline my-2 my-lg-0" action="./search_material.php" method="post">
-                <input class="form-control mr-sm-2" type="search_material" placeholder="材料検索" aria-label="search_material" name="search_material" value="">
-                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">材料検索</button>
-            </form>
-            <form class="form-inline my-2 my-lg-0" action="./search_time.php" method="post">
-                <select class="form-control mr-sm-2" type="search_time" placeholder="レシピ名検索" aria-label="search_time" name="search_time" value="">
+            <form class="form-inline my-2 my-lg-0" action="./" method="get">
+                <select class="form-control mr-sm-2" type="search_category" placeholder="カテゴリ検索" aria-label="search_category" name="search_category" value="<?= $searchCategory ?>">
                     <option value="">--選択してください--</option>
-                    <option value="">5分</option>
-                    <option value="">10分</option>
-                    <option value="">15分</option>
-                    <option value="">20分</option>
+                    <?php foreach ($categorylist as $v) : ?>
+                        <option value="<?= $v['id'] ?>">
+                            <?= $v['category'] ?>
+                        </option>
+                    <?php endforeach ?>
+                </select>
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">カテゴリ検索</button>
+            </form>
+            <form class="form-inline my-2 my-lg-0" action="./" method="get">
+                <select class="form-control mr-sm-2" type="search_time" placeholder="レシピ名検索" aria-label="search_time" name="search_time" value="<?= $searchTime ?>">
+                    <option value="">--選択してください--</option>
+                    <option value="5">5分</option>
+                    <option value="10">10分</option>
+                    <option value="15">15分</option>
+                    <option value="20">20分</option>
                 </select>
                 <button class="btn btn-outline-light my-2 my-sm-0" type="submit">時間検索</button>
             </form>
@@ -63,69 +129,61 @@
         <h1>レシピ詳細</h1>
         <div class="row my-5">
             <div class="col-md-6">
-                <img src="../images/07894_l.jpg" class="card-img-top" alt="...">
-                <div class="table-responsive">
-                    <table class="table mt-3">
-                        <tr>
-                            <th class="text-nowrap">レシピ名</th>
-                            <td>カレー</td>
-                        </tr>
-                        <tr>
-                            <th class="text-nowrap">考案者</th>
-                            <td>A子</td>
-                        </tr>
-                        <tr>
-                            <th class="text-nowrap">登録日</th>
-                            <td>2020-07-18</td>
-                        </tr>
-                        <tr>
-                            <th class="text-nowrap">調理時間</th>
-                            <td>約20分</td>
-                        </tr>
-                        <tr>
-                            <th class="text-nowrap">ジャンル</th>
-                            <td>ご飯もの、肉、辛いもの</td>
-                        </tr>
-                        <tr>
-                            <th class="text-nowrap">材料・調味料</th>
-                            <td>
-                                豚バラブロック 190g<br />
-                                にんじん 1本<br />
-                                玉ねぎ 1個<br />
-                                じゃがいも 1個<br />
-                                カレールー 115g<br>
-                                水 830ml<br />
-                                サラダ油 適量<br />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-nowrap">調理方法</th>
-                            <td>
-                                準備.
-                                野菜の皮をむいておきます。<br>
-                                1.
-                                肉と野菜を一口大にきります。<br>
-                                2.
-                                フライパンにサラダ油をひいたら中火で肉を炒めます。<br>
-                                3.
-                                野菜を加え、たまねぎが透き通るくらいまで炒めます。<br>
-                                4.
-                                水を加えて15〜20分煮込みます。<br>
-                                5.
-                                カレールーを加えて完全に溶かしながら10分煮込んで完成です。<br>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-nowrap">ポイント事項</th>
-                            <td>
-                                具材やお肉はお好みのものを使用してください。<br>
-                                はちみつをいれると、味がまろやかになります。<br>
-                                今回は3種類の野菜を使用しましたが、キノコ類やナスや彩り豊かなパプリカを使用しても
-                                美味しく召し上がれます。お好きな食材でぜひ作ってみて下さい。<br>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                <?php if ($return) : ?>
+                    <img src="../images/<?= $recipe['photo'] ?>" class="card-img-top" alt="...">
+                    <div class="table-responsive">
+                        <table class="table mt-3">
+                            <tr>
+                                <th class="text-nowrap">レシピ名</th>
+                                <td><?= $recipe['cooking_name'] ?></td>
+                            </tr>
+                            <tr>
+                                <th class="text-nowrap">考案者</th>
+                                <td><?= $recipe['family_name'] . ' ' . $recipe['first_name'] ?></td>
+                            </tr>
+                            <tr>
+                                <th class="text-nowrap">登録日</th>
+                                <td><?= $recipe['registration_date'] ?></td>
+                            </tr>
+                            <tr>
+                                <th class="text-nowrap">調理時間</th>
+                                <td><?= $recipe['cooking_time'] ?>分</td>
+                            </tr>
+                            <tr>
+                                <?php $categoryList = $cookingCategoryDB->getCategory($recipe['id']); ?>
+                                <th class="text-nowrap">カテゴリ</th>
+                                <td><?php $category = '';
+                                    foreach ($categoryList as $val) {
+                                        $category .= $val['category'] . ' / ';
+                                    }
+                                    $category = rtrim($category, ' / ');
+                                    echo $category;
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-nowrap">材料・調味料</th>
+                                <td>
+                                    <?= nl2br($recipe['material']) ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-nowrap">調理方法</th>
+                                <td>
+                                    <?= nl2br($recipe['cooking_method']) ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-nowrap">ポイント事項</th>
+                                <td>
+                                    <?= nl2br($recipe['memo']) ?>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                <?php else : ?>
+                    データはありませんよ！
+                <?php endif ?>
             </div>
         </div>
     </div>

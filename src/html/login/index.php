@@ -1,3 +1,13 @@
+<?php
+// セッションをスタートする。
+session_start();
+// セッションIDをリクエストのたびに更新する。
+session_regenerate_id();
+
+// エラーページのエラーを消しておく。
+unset( $_SESSION['err_msg1']);
+
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -33,6 +43,11 @@
             <div class="col-sm-3"></div>
             <div class="col-sm-6">
                 <form action="./login.php" method="post">
+                    <?php if (isset($_SESSION['error'])) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?= $_SESSION['error'] ?>
+                        </div>
+                    <?php endif ?>
                     <div class="form-group">
                         <label for="user">ユーザー名</label>
                         <input type="text" class="form-control" id="user" name="user">

@@ -1,3 +1,8 @@
+<?php
+// セッションをスタートする。
+session_start();
+session_regenerate_id();
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -29,12 +34,12 @@
             <!-- エラーメッセージ -->
             <div class="row my-2">
                 <div class="col-sm-3"></div>
-                <?php if (isset($_SESSION['err_msg']['entry'])) : ?>
+                <?php if (isset($_SESSION['err_msg']['add'])) : ?>
                     <div class="col-sm-6 alert alert-danger alert-dismissble fade show">
-                        <p class="warning"><?= $_SESSION['err_msg']['entry'] ?><button class="close" data-dismiss="alert">&times;</button></p>
-                    <?php endif ?>
+                        <p class="warning"><?= $_SESSION['err_msg']['add'] ?><button class="close" data-dismiss="alert">&times;</button></p>
                     </div>
-                    <div class="col-sm-3"></div>
+                <?php endif ?>
+                <div class="col-sm-3"></div>
             </div>
             <!-- エラーメッセージ ここまで -->
 
@@ -42,27 +47,27 @@
             <div class="row my-2">
                 <div class="col-sm-3"></div>
                 <div class="col-sm-6">
-                    <form action="./entry_action.php" method="post">
-                        <input type="hidden" name="token" value="<?= $token ?>">
+                    <form action="./add_action.php" method="post">
+                        <!-- <input type="hidden" name="token" value="<?= $token ?>"> -->
 
                         <div class="form-group">
                             <label for="user">ユーザーID</label>
-                            <input type="text" class="form-control" id="user" name="user" value="">
+                            <input type="text" class="form-control" id="user" name="user" value="<?php if (isset($_SESSION['login']['user'])) echo $_SESSION['login']['user'] ?>">
                         </div>
 
                         <div class="form-group">
                             <label for="family_name">姓</label>
-                            <input type="text" class="form-control" id="family_name" name="family_name" value="">
+                            <input type="text" class="form-control" id="family_name" name="family_name" value="<?php if (isset($_SESSION['login']['family_name'])) echo $_SESSION['login']['family_name'] ?>">
                         </div>
 
                         <div class="form-group">
                             <label for="first_name">名</label>
-                            <input type="text" class="form-control" id="first_name" name="first_name" value="">
+                            <input type="text" class="form-control" id="first_name" name="first_name" value="<?php if (isset($_SESSION['login']['first_name'])) echo $_SESSION['login']['first_name'] ?>">
                         </div>
 
                         <div class="form-group">
                             <label for="password">パスワード</label>
-                            <input type="password" class="form-control" id="password" name="password" value="">
+                            <input type="password" class="form-control" id="password" name="password" value="<?php if (isset($_SESSION['login']['password'])) echo $_SESSION['login']['password'] ?>">
                         </div>
                         <input type="submit" value="登録" class="btn btn-primary">
                         <input type="button" value="キャンセル" class="btn btn-outline-primary" onclick="location.href='./';">
