@@ -29,7 +29,6 @@ try {
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 

@@ -56,7 +56,7 @@ try {
     $ret = $db->addUser($_SESSION['login']['user'], $_SESSION['login']['family_name'], $_SESSION['login']['first_name'], $_SESSION['login']['password'], $_SESSION['err_msg']['add']);
 
     if ($ret == false) {
-        // エラーメッセージをセッションに保存して、リダイレクトする
+        // 同じユーザーIDのユーザーが存在したら登録画面に戻る
         header('Location: ./add.php');
         exit;
     }

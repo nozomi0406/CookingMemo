@@ -2,7 +2,6 @@
 // 必要なファイルを読み込む
 require_once('../classes/model/BaseModel.php');
 require_once('../classes/model/Cooking.php');
-require_once('../classes/model/Cooking_Category.php');
 
 // セッションをスタートする。
 session_start();

@@ -34,31 +34,13 @@ class BaseModel
         $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    /**
+     * 直近で追加したレコードのidを取得する。
+     *
+     * @return void
+     */
     public function lastInsertId()
     {
         return $this->dbh->lastInsertId();
     }
-//     /**
-//      * トランザクションを開始します。
-//      */
-//     public function begin()
-//     {
-//         $this->dbh->beginTransaction();
-//     }
-
-//     /**
-//      * トランザクションをコミットします。
-//      */
-//     public function commit()
-//     {
-//         $this->dbh->commit();
-//     }
-
-//     /**
-//      * トランザクションをロールバックします。
-//      */
-//     public function rollback()
-//     {
-//         $this->dbh->rollback();
-//     }
 }

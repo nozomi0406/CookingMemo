@@ -3,7 +3,7 @@
 require_once('../classes/model/BaseModel.php');
 require_once('../classes/model/Cooking.php');
 require_once('../classes/model/Category.php');
-require_once('../classes/model/Cooking_Category.php');
+require_once('../classes/model/CookingCategory.php');
 
 // セッションをスタートする。
 session_start();
@@ -25,7 +25,7 @@ if (empty($_SESSION['user'])) {
 try {
     // インスタンス作成
     $cookingDB = new Cooking();
-    $cookingCategoryDB = new Cooking_Category();
+    $cookingCategoryDB = new CookingCategory();
 
     // 現在日付の作成
     $datetime = new DateTime();

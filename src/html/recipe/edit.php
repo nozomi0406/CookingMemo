@@ -3,7 +3,7 @@
 require_once('../classes/model/BaseModel.php');
 require_once('../classes/model/Cooking.php');
 require_once('../classes/model/Category.php');
-require_once('../classes/model/Cooking_Category.php');
+require_once('../classes/model/CookingCategory.php');
 
 // セッションをスタートする。
 session_start();
@@ -29,7 +29,7 @@ try {
     // todo_itemテーブルクラスのインスタンスを生成する
     $cookingDB = new Cooking();
     $categoryDB = new Category();
-    $cookingCategoryDB = new Cooking_Category();
+    $cookingCategoryDB = new CookingCategory();
 
     // 指定した料理の情報を取得します。
     $recipe = $cookingDB->getRecipePart($_POST['id']);

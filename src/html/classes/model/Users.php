@@ -33,7 +33,6 @@ class Users extends BaseModel
             return false;
         }
 
-
         // パスワードをハッシュ化(暗号化)します。
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
 

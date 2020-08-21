@@ -3,7 +3,7 @@
 require_once('../classes/model/BaseModel.php');
 require_once('../classes/model/Cooking.php');
 require_once('../classes/model/Category.php');
-require_once('../classes/model/Cooking_Category.php');
+require_once('../classes/model/CookingCategory.php');
 
 // セッションをスタートする。
 session_start();
@@ -28,7 +28,7 @@ try {
     // cookingテーブルクラスのインスタンスを生成する
     $cookingDB = new Cooking();
     $categoryDB = new Category();
-    $cookingCategoryDB = new Cooking_Category();
+    $cookingCategoryDB = new CookingCategory();
 
     // カテゴリを全件取得します。
     $categorylist = $categoryDB->categorySelectAll();

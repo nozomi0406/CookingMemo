@@ -4,7 +4,7 @@
  * 調理品と調理カテゴリを繋げるクラス
  * BaseModelクラスを継承。
  */
-class Cooking_Category extends BaseModel
+class CookingCategory extends BaseModel
 {
     /**
      * コンストラクタ

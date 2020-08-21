@@ -64,8 +64,6 @@ class Cooking extends BaseModel
      */
     public function getCategoryBySearchCategory($search)
     {
-        // var_dump($search);
-        // exit;
 
         $sql = '';
         $sql .= 'SELECT ';
@@ -196,6 +194,8 @@ class Cooking extends BaseModel
     /**
      * 新規レシピを追加する
      *
+     * @param array $param
+     * 
      * @param integer $userId
      * @param string $photo
      * @param string $cookingName
@@ -206,10 +206,8 @@ class Cooking extends BaseModel
      * @param string $registrationDate
      * @return void
      */
-    public function recipeInsert($userId, $photo, $cookingName, $cookingTime, $material, $cookingMethod, $memo, $registrationDate)
+    public function recipeInsert(array $param)
     {
-        // var_dump($registrationDate);
-        // exit;
 
         $sql = 'INSERT into cooking (';
         $sql .= 'user_id,';
@@ -235,14 +233,14 @@ class Cooking extends BaseModel
         $stmt = $this->dbh->prepare($sql);
 
         // SQL文の該当箇所に、変数の値を割り当て（バインド）する
-        $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
-        $stmt->bindValue(':photo', $photo, PDO::PARAM_STR);
-        $stmt->bindValue(':cooking_name', $cookingName, PDO::PARAM_STR);
-        $stmt->bindValue(':cooking_time', $cookingTime, PDO::PARAM_INT);
-        $stmt->bindValue(':material', $material, PDO::PARAM_STR);
-        $stmt->bindValue(':cooking_method', $cookingMethod, PDO::PARAM_STR);
-        $stmt->bindValue(':memo', $memo, PDO::PARAM_STR);
-        $stmt->bindValue(':registration_date', $registrationDate, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $param['userId'], PDO::PARAM_INT);
+        $stmt->bindValue(':photo', $param['photo'], PDO::PARAM_STR);
+        $stmt->bindValue(':cooking_name', $param['cookingName'], PDO::PARAM_STR);
+        $stmt->bindValue(':cooking_time', $param['cookingTime'], PDO::PARAM_INT);
+        $stmt->bindValue(':material', $param['material'], PDO::PARAM_STR);
+        $stmt->bindValue(':cooking_method', $param['cookingMethod'], PDO::PARAM_STR);
+        $stmt->bindValue(':memo', $param['memo'], PDO::PARAM_STR);
+        $stmt->bindValue(':registration_date', $param['registrationDate'], PDO::PARAM_STR);
 
         // SQLを実行する
         return $stmt->execute();
@@ -256,8 +254,7 @@ class Cooking extends BaseModel
      */
     public function recipeUpdate(array $param): bool
     {
-        // var_dump($param);
-        // exit;
+
         $sql = '';
         $sql .= 'UPDATE cooking set ';
         $sql .= isset($param['userId']) ? 'user_id=:user_id,' : '';
@@ -343,7 +340,10 @@ class Cooking extends BaseModel
         $cookingName = "%$cookingName%";
 
         // SQL文を作成する
-        $sql = 'SELECT * from cooking INNER JOIN users ON cooking.user_id=users.user_id where cooking_name like :cooking_name AND cooking.is_deleted = 0';
+        $sql = 'SELECT * from cooking ';
+        $sql .= 'INNER JOIN users ON cooking.user_id=users.user_id ';
+        $sql .= 'where cooking_name like :cooking_name ';
+        $sql .= 'AND cooking.is_deleted = 0';
 
         // SQL文を実行する準備
         $stmt = $this->dbh->prepare($sql);

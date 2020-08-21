@@ -3,7 +3,7 @@
 require_once('../classes/model/BaseModel.php');
 require_once('../classes/model/Cooking.php');
 require_once('../classes/model/Category.php');
-require_once('../classes/model/Cooking_Category.php');
+require_once('../classes/model/CookingCategory.php');
 require_once('../classes/ValidationUtil/ValidationUtil.php');
 
 // セッションをスタートする。
@@ -70,10 +70,13 @@ try {
 
     // インスタンス作成
     $cookingDB = new Cooking();
-    $cookingCategoryDB = new Cooking_Category();
+    $cookingCategoryDB = new CookingCategory();
+
+    // $paramの中に取得したレコードを入れる。
+    $param = ['userId' => $_SESSION['user']['id'], 'photo' => $_FILES['image_file']['name'], 'cookingName' => $_SESSION['recipe']['cooking_name'], 'cookingTime' => $_SESSION['recipe']['cooking_time'], 'material' => $_SESSION['recipe']['material'], 'cookingMethod' => $_SESSION['recipe']['cooking_method'], 'memo' => $_SESSION['recipe']['memo'], 'registrationDate' => $day];
 
     // 取得したレコードを連想配列として変数に代入する
-    $cookingDB->recipeInsert($_SESSION['user']['id'], $_FILES['image_file']['name'], $_SESSION['recipe']['cooking_name'], $_SESSION['recipe']['cooking_time'], $_SESSION['recipe']['material'], $_SESSION['recipe']['cooking_method'], $_SESSION['recipe']['memo'], $day);
+    $cookingDB->recipeInsert($param);
 
     // 追加したレコードのidを取得する。
     $lastid = $cookingDB->lastInsertId();
