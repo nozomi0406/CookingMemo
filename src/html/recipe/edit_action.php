@@ -32,18 +32,21 @@ try {
     $datetime->setTimezone(new DateTimeZone('Asia/Tokyo'));
     $day = $datetime->format('Y/m/d');
 
+    //  ポストしてきたものをセッションに入れる。
     $_SESSION['recipe'] = $_POST;
 
+    // ファイルの中身が空ならnullで返す。
     if ($_FILES['image_file']['name'] == '') {
         $_FILES['image_file']['name'] = null;
     }
 
+    // $paramの中に取得したレコードを入れる。
     $param = ['userId' => $_SESSION['user']['id'], 'photo' => $_FILES['image_file']['name'], 'cookingName' => $_SESSION['recipe']['cooking_name'], 'cookingTime' => $_SESSION['recipe']['cooking_time'], 'material' => $_SESSION['recipe']['material'], 'cookingMethod' => $_SESSION['recipe']['cooking_method'], 'memo' => $_SESSION['recipe']['memo'], 'registrationDate' => $day, 'id' => $_SESSION['recipe']['id']];
 
     // 取得したレコードを連想配列として変数に代入する
     $cookingDB->recipeUpdate($param);
 
-    // 料理カテゴリを修正する。
+    // 料理カテゴリを修正(一旦削除し、再度追加)する。
     $cookingCategoryDB->cookingCategoryDelete($_SESSION['recipe']['id']);
 
     foreach ($_SESSION['recipe']['category'] as $v) {

@@ -25,6 +25,7 @@ try {
     // Usersクラスのloginメソッドから取得したレコードを連想配列として変数に代入する
     $result = $db->login($_POST['user'], $_POST['password']);
 
+    // 結果が無い場合、カウントしていく。
     if (empty($result)) {
         if (!isset($_SESSION['err_count'])) {
             $_SESSION['err_count'] = 1;
@@ -38,6 +39,7 @@ try {
         exit;
     }
 
+    // 成功したらユーザー情報をセッションに入れ、ホーム画面へ(エラーを解除しておく)
     unset($_SESSION['error']);
     $_SESSION['user'] = $result;
     header('location: ../recipe/');

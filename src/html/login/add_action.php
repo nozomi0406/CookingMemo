@@ -7,10 +7,17 @@ require_once('../classes/model/Users.php');
 session_start();
 session_regenerate_id();
 
+//  ポストしてきたものをセッションに入れる。
 $_SESSION['login'] = $_POST;
 
-try {
+// フォームで送信されてきたトークンが正しいかどうか確認（CSRF対策）
+if (!isset($_SESSION['token']) || $_SESSION['token'] !== $_POST['token']) {
+    $_SESSION['err_msg']['err'] = "不正な処理が⾏われました。";
+    header('Location: ./edit.php');
+    exit;
+}
 
+try {
     // ユーザーIDのバリデーション
     $validityCheck = Users::isValidUser($_SESSION['login']['user'], $_SESSION['err_msg']['add']);
     if ($validityCheck === false) {

@@ -28,10 +28,6 @@ $datetime = new DateTime();
 $datetime->setTimezone(new DateTimeZone('Asia/Tokyo'));
 $day = $datetime->format('Y/m/d');
 
-// var_dump();
-// exit;
-
-
 // サニタイズ
 foreach ($_POST as $k => $v) {
     $post[$k] = htmlspecialchars($v, ENT_QUOTES, 'utf-8');
@@ -41,9 +37,6 @@ try {
     //  サニタイズを行ったものをセッションする。
     $_SESSION['recipe'] = $post;
     $_SESSION['recipe']['category'] = $_POST['category'];
-
-    // var_dump($_SESSION['recipe']['category']);
-    // exit;
 
     // バリデーションチェック
     $validityCheck = array();
@@ -66,13 +59,9 @@ try {
     // ポイント事項のバリデーション
     $validityCheck[] = ValidationUtil::isValidMemo($_SESSION['recipe']['memo'], $_SESSION['err_msg']['memo']);
 
-    // var_dump($validityCheck);
-    // exit;
-
     // バリデーションで不備があった場合
     foreach ($validityCheck as $v) {
         // $vにnullが代入されている可能性があるので、必ず「===」で比較する
-
         if ($v === false) {
             header('Location: ./add.php');
             exit;
